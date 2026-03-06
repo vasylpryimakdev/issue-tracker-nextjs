@@ -7,6 +7,7 @@ import ReactMarkdown from "react-markdown";
 import { Pencil2Icon } from "@radix-ui/react-icons";
 import IssueDetail from "./IssueDetail";
 import EditIssueButton from "./EditIssueButton";
+import DeleteIssueButton from "./DeleteIssueButton";
 
 interface Props {
   params: {
@@ -24,12 +25,15 @@ const IssueDetailPage = async ({ params }: Props) => {
   }
 
   return (
-    <Grid columns={{ initial: "1", md: "2" }} gap="5">
-      <Box>
+    <Grid columns={{ initial: "1", sm: "5" }} gap="5">
+      <Box className="md:col-span-4">
         <IssueDetail issue={issue} />
       </Box>
       <Box>
-        <EditIssueButton issueId={issue.id} />
+        <Flex direction="column" gap="4">
+          <EditIssueButton issueId={issue.id} />
+          <DeleteIssueButton issueId={issue.id} />
+        </Flex>
       </Box>
     </Grid>
   );
