@@ -6,7 +6,7 @@ interface Props {
   status: Status;
 }
 
-const statusMap: Record<
+export const statusMap: Record<
   Status,
   { label: string; color: "red" | "violet" | "green" }
 > = {
