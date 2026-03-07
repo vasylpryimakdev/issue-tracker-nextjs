@@ -16,7 +16,7 @@ import { Issue, Status } from "@prisma/client";
 import { ArrowUpIcon } from "@radix-ui/react-icons";
 
 interface Props {
-  searchParams: { status: Status; orderBy: keyof Issue };
+  searchParams: { status: Status; orderBy: keyof Issue; sort: "asc" | "desc" };
 }
 
 const columns: { label: string; value: keyof Issue; className?: string }[] = [
@@ -27,12 +27,21 @@ const columns: { label: string; value: keyof Issue; className?: string }[] = [
 
 const IssuesPage = async ({ searchParams }: Props) => {
   const validStatuses = Object.values(Status);
-  const status = validStatuses.includes(searchParams.status)
+  const statusToFilter = validStatuses.includes(searchParams.status)
     ? searchParams.status
+    : undefined;
+  const sortBy = ["asc", "desc"].includes(searchParams.sort)
+    ? searchParams.sort
+    : "asc";
+  const orderBy = columns
+    .map((column) => column.value)
+    .includes(searchParams.orderBy)
+    ? { [searchParams.orderBy]: sortBy }
     : undefined;
 
   const issues = await prisma.issue.findMany({
-    where: { status },
+    where: { status: statusToFilter },
+    orderBy: orderBy,
   });
 
   return (
@@ -47,7 +56,13 @@ const IssuesPage = async ({ searchParams }: Props) => {
                 className={`${column.className} relative`}
               >
                 <NextLink
-                  href={{ query: { ...searchParams, orderBy: column.value } }}
+                  href={{
+                    query: {
+                      ...searchParams,
+                      orderBy: column.value,
+                      sort: searchParams.sort === "asc" ? "desc" : "asc",
+                    },
+                  }}
                 >
                   {column.label}
                 </NextLink>
