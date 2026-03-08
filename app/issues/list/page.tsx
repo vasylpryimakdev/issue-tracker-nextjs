@@ -1,46 +1,14 @@
-import prisma from "@/prisma/client";
-import {
-  Link,
-  TableBody,
-  TableCell,
-  TableColumnHeaderCell,
-  TableHeader,
-  TableRoot,
-  TableRow,
-} from "@radix-ui/themes";
-import NextLink from "next/link";
-import React from "react";
-import IssueActions from "./IssueActions";
-import { IssueStatusBadge } from "@/app/components";
-import { Issue, Status } from "@prisma/client";
-import { ArrowDownIcon } from "@radix-ui/react-icons";
-import Pagination from "@/app/components/Pagination";
-
-enum sortOptions {
-  ASC = "asc",
-  DESC = "desc",
-}
-
-interface Column {
-  label: string;
-  value: keyof Issue;
-  className?: string;
-}
+import Pagination from '@/app/components/Pagination';
+import prisma from '@/prisma/client';
+import { Status } from '@prisma/client';
+import IssueActions from './IssueActions';
+import IssueTable, { IssueQuery, columnNames } from './IssueTable';
+import { Flex } from '@radix-ui/themes';
+import { Metadata } from 'next';
 
 interface Props {
-  searchParams: {
-    status: Status;
-    orderBy: keyof Issue;
-    sort: sortOptions;
-    page: string;
-  };
+  searchParams: IssueQuery
 }
-
-const columns: Column[] = [
-  { label: "Issue", value: "title" },
-  { label: "Status", value: "status", className: "hidden md:table-cell" },
-  { label: "Created", value: "createdAt", className: "hidden md:table-cell" },
-];
 
 const IssuesPage = async ({ searchParams }: Props) => {
   const statuses = Object.values(Status);
@@ -49,10 +17,9 @@ const IssuesPage = async ({ searchParams }: Props) => {
     : undefined;
   const where = { status };
 
-  const orderBy = columns
-    .map((column) => column.value)
+  const orderBy = columnNames
     .includes(searchParams.orderBy)
-    ? { [searchParams.orderBy]: "asc" }
+    ? { [searchParams.orderBy]: 'asc' }
     : undefined;
 
   const page = parseInt(searchParams.page) || 1;
@@ -68,60 +35,23 @@ const IssuesPage = async ({ searchParams }: Props) => {
   const issueCount = await prisma.issue.count({ where });
 
   return (
-    <div>
+    <Flex direction="column" gap="3">
       <IssueActions />
-      <TableRoot variant="surface">
-        <TableHeader>
-          <TableRow>
-            {columns.map((column) => (
-              <TableColumnHeaderCell
-                key={column.value}
-                className={`${column.className} relative`}
-              >
-                <NextLink
-                  href={{
-                    query: {
-                      orderBy: column.value,
-                    },
-                  }}
-                >
-                  {column.label}
-                </NextLink>
-                {column.value === searchParams.orderBy && (
-                  <ArrowDownIcon className="absolute inline self-center" />
-                )}
-              </TableColumnHeaderCell>
-            ))}
-          </TableRow>
-        </TableHeader>
-        <TableBody>
-          {issues.map((issue) => (
-            <TableRow key={issue.id}>
-              <TableCell>
-                <Link href={`/issues/${issue.id}`}>{issue.title}</Link>
-                <div className="block md:hidden">
-                  <IssueStatusBadge status={issue.status} />
-                </div>
-              </TableCell>
-              <TableCell className="hidden md:table-cell">
-                <IssueStatusBadge status={issue.status} />
-              </TableCell>
-              <TableCell className="hidden md:table-cell">
-                {issue.createdAt.toDateString()}
-              </TableCell>
-            </TableRow>
-          ))}
-        </TableBody>
-      </TableRoot>
+      <IssueTable searchParams={searchParams} issues={issues} />
       <Pagination
         pageSize={pageSize}
         currentPage={page}
         itemCount={issueCount}
       />
-    </div>
+    </Flex>
   );
 };
 
-export const dynamic = "force-dynamic";
+export const dynamic = 'force-dynamic';
+
+export const metadata: Metadata = {
+  title: 'Issue Tracker - Issue List',
+  description: 'View all project issues'
+};
 
 export default IssuesPage;
