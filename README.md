@@ -1,34 +1,239 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# 🐞 Issue Tracker
 
-## Getting Started
+A modern and responsive React application for discovering video games using the RAWG API.
 
-First, run the development server:
+Game Hub allows users to browse games, filter them by platform and release date, and explore detailed information in a clean and intuitive UI.
+
+---
+
+## 🚀 Live Demo
+
+🔗 **Play the app here:**  
+https://issue-tracker-livid-zeta.vercel.app/
+
+---
+
+## 🚀 Features
+
+- 🐞 Create, edit and delete issues
+- 📝 Markdown support for issue descriptions
+- 🔐 Authentication with NextAuth
+- 📊 Dashboard with issue statistics
+- 📈 Charts for issue status overview
+- ✔️ Form validation with Zod
+- ⚡ Fast data fetching with React Query
+- 🔔 Toast notifications
+- 💀 Skeleton loading states
+- 📱 Responsive UI
+
+---
+
+## 🛠 Tech Stack
+
+### Frontend
+
+- **▲ Next.js 13 (App Router)**
+- **🔷 TypeScript**
+- **⚛️ React**
+
+### State & Data
+
+- **🔄 React Query (TanStack Query) – server state management**
+- **🐻 Zustand – global UI state**
+
+### UI
+
+- **🎨 Tailwind CSS**
+- **Radix UI**
+- **React Icons**
+
+### Forms & Validation
+
+- **React Hook Form**
+- **Zod**
+
+### Backend
+
+- **Next.js API Routes**
+- **Prisma ORM**
+
+### Database
+
+- **PostgreSQL / MySQL**
+
+### Authentication
+
+- **NextAuth.js**
+
+### Data Fetching
+
+- **TanStack React Query**
+- **Axios**
+
+### Visualization
+
+- **Recharts**
+
+---
+
+## 📊 Application Pages
+
+### Dashboard
+
+Displays a summary of issue statuses with charts.
+
+#### Includes:
+
+- issue statistics
+- status overview
+- interactive charts
+
+### Issues Page
+
+Manage and browse all issues.
+
+#### Features:
+
+- create issues
+- edit issues
+- delete issues
+- view issue details
+
+### Issue Details
+
+Detailed page for a selected issue.
+
+#### Includes:
+
+- issue description (Markdown)
+- issue status
+- creation information
+
+---
+
+## 📂 Project Structure
+
+```
+app
+│
+├── api               # API routes
+├── auth              # Authentication logic
+├── components        # Reusable UI components
+├── issues            # Issue pages
+│
+├── layout.tsx        # Root layout
+├── page.tsx          # Dashboard page
+├── NavBar.tsx        # Navigation bar
+├── IssueChart.tsx    # Chart component
+├── IssueSummary.tsx  # Dashboard summary
+├── QueryClientProvider.tsx
+└── validationSchemas.ts
+
+prisma
+├── schema.prisma     # Database schema
+└── client.ts         # Prisma client
+```
+
+---
+
+## 🧠 Key Concepts
+
+### Next.js App Router
+
+Uses the Next.js 13 routing system with:
+
+- server components
+- client components
+- nested layouts
+- API routes
+
+### Prisma ORM
+
+Prisma is used for:
+
+- database schema definition
+- querying the database
+- type-safe database access
+
+### React Query
+
+Used for server state management:
+
+- fetching data
+- caching
+- background refetching
+- mutation handling
+
+### Form Validation
+
+- Forms are built using:
+- React Hook Form
+- Zod schema validation
+
+This provides type-safe form validation.
+
+---
+
+## 🎨 UI Features
+
+- Clean modern UI
+- Responsive layout
+- Skeleton loading states
+- Toast notifications
+- Markdown editor for issue descriptions
+- Charts for analytics
+
+---
+
+## ⚡ Performance Optimizations
+
+- Server Components (Next.js)
+- React Query caching
+- Skeleton loaders during fetch
+- Optimized API calls
+
+---
+
+## 📦 Installation
+
+Clone the repository:
+
+```bash
+git clone https://github.com/vasylpryimakdev/issue-tracker.git
+cd issue-tracker
+```
+
+### Install dependencies:
+
+```bash
+npm install
+```
+
+### Run the development server
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### The app will be available at
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash
+http://localhost:3000
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+## 🔑 Environment Variables
 
-## Learn More
+### Create a .env file in the root directory:
 
-To learn more about Next.js, take a look at the following resources:
+```ts
+DATABASE_URL = your_database_url_here;
+NEXTAUTH_URL = your_nextauth_url_here;
+NEXTAUTH_SECRET = your_nextauth_secret_here;
+GOOGLE_CLIENT_ID = your_google_client_id_here;
+GOOGLE_CLIENT_SECRET = your_google_client_secret_here;
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## 👨‍💻 Author
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+GitHub: https://github.com/vasylpryimakdev
+LinkedIn: https://www.linkedin.com/in/vasyl-pryimak-64a204384
